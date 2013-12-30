@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd tests/ &&
+python2.4 testApi4.py

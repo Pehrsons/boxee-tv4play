@@ -1,0 +1,20 @@
+﻿<app>
+   <id>tv.boxeeplay.tv4play2</id>
+   <name>TV4 Play</name>
+   <version>2.00</version>
+   <description>TV4 Play är nu åter i din Boxee. Appen är skapad av boxeeplay.tv.
+
+Version 2.00</description>
+   <thumb>http://www.boxeeplay.tv/images/tv4play.png</thumb>
+   <repositoryid>tv.boxeeplay</repositoryid>
+   <repository>http://www.boxeeplay.tv/apps</repository>
+   <media>video</media>
+   <author>boxeeplay</author>
+   <copyright>boxeeplay.tv</copyright>
+   <email>dev@boxeeplay.tv</email>
+   <type>skin</type>
+   <startWindow>start</startWindow>
+   <platform>all</platform>
+   <minversion>1.0</minversion>
+   <test-app>true</test-app>
+</app>
