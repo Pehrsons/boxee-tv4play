@@ -15,7 +15,7 @@ from async_task import AsyncTask
 VERSION = "TV4Play 2.00"
 NO_SHOWS_TEXT = "Inga program laddade"
 NO_EPISODES_TEXT = "Inga avsnitt för det här programmet"
-BX_JSACTIONS_URL = "http://boxeeplay.tv/bx-jsactions/tv4play.js"
+BX_JSACTIONS_URL = "http://boxeeplay.tv/bx-jsactions/tv4play2.js"
 
 initiated = False
 category_list_index = -1

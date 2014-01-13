@@ -102,7 +102,7 @@ def get_image_size(url, size):
 
 def episode_list_item_to_playable(item):
     play = mc.ListItem(item.GetMediaType())
-    play.SetPath("http://embed.tv4.se/tv4play/v0/tv4video.swf?vid=%s" %item.GetProperty("id"))
+    play.SetPath("http://tv4play.se/program/x?video_id=%s" %item.GetProperty("id"))
     play.SetDescription(item.GetDescription())
     play.SetTitle(item.GetTitle())
     play.SetLabel(item.GetLabel())
