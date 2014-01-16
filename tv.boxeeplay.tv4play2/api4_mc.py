@@ -90,7 +90,7 @@ def episode_to_list_item(item, category="undefined", show="undefined"):
     }[item["full_program"]]
     list_item.SetStudio(info)
     list_item.SetThumbnail(get_image_size(item["metaimage"], "480x270"))
-    #list_item.SetIcon(get_image_size(item["thumbnail_url"], "480x270")) # ListItem.Icon in UI shows the Thumbnail ...
+    list_item.SetIcon(get_image_size(item["metaimage"], "480x270")) # ListItem.Icon in UI shows the Thumbnail ...
     return list_item
 
 def get_image_size(url, size):
