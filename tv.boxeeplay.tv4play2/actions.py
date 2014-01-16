@@ -5,9 +5,9 @@
 import mc, ip_info
 from api4 import Api4Client as ApiClient
 from api4_mc import category_to_list_item, show_to_list_item, episode_to_list_item, set_outside_sweden, episode_list_item_to_playable
+from pirateplay import pirateplayable_item, NoStreamsError, NoSuitableStreamError
 from logger import BPLog,BPTraceEnter,BPTraceExit,Level,IsEnabled
 from itertools import islice
-from urllib import quote_plus
 from trackerjob import TrackerJob
 from jobmanager import BoxeeJobManager
 from async_task import AsyncTask
@@ -15,7 +15,6 @@ from async_task import AsyncTask
 VERSION = "TV4Play 2.00"
 NO_SHOWS_TEXT = "Inga program laddade"
 NO_EPISODES_TEXT = "Inga avsnitt för det här programmet"
-BX_JSACTIONS_URL = "http://boxeeplay.tv/bx-jsactions/tv4play2.js"
 
 initiated = False
 category_list_index = -1
@@ -327,15 +326,43 @@ def play_item(item):
     store_episode_list()
 
     play_item = episode_list_item_to_playable(item)
-    play_item.SetPath("flash://boxeeplay.tv/src=%s&bx-jsactions=%s" %
-                      (quote_plus(play_item.GetPath()),quote_plus(BX_JSACTIONS_URL)))
-    BPLog("Playing clip \"%s\" with path \"%s\" and bitrate %s." %(item.GetLabel(), item.GetPath(), item.GetProperty("bitrate")))
-    mc.GetPlayer().Play(play_item)
-
     if (item.GetProperty("episode")):
         item_type="Episode"
     else:
         item_type="Clip"
+
+    try:
+        play_item = pirateplayable_item(play_item)
+    except NoStreamsError:
+        track("Error",
+                { "title": item.GetLabel(),
+                  "url": item.GetPath(),
+                  "Id": mc.GetUniqueId(),
+                  "type": item_type,
+                  "show": item.GetProperty("show"),
+                  "category": item.GetProperty("category"),
+                  "error_type": "No Streams"
+                })
+        show_error_and_continue(title="Inga strömmar", message="%s hade inga strömmar! Vi är beroende av pirateplay här, de kanske har problem." %play_item.GetLabel())
+        BPTraceExit()
+        return
+    except NoSuitableStreamError:
+        track("Error",
+                { "title": item.GetLabel(),
+                  "url": item.GetPath(),
+                  "Id": mc.GetUniqueId(),
+                  "type": item_type,
+                  "show": item.GetProperty("show"),
+                  "category": item.GetProperty("category"),
+                  "error_type": "No Suitable Streams"
+                })
+        show_error_and_continue(title="Fel format", message="%s hade inga strömmar i rätt format. Vi vet inte hur vi ska spela upp de här strömmarna." %play_item.GetLabel())
+        BPTraceExit()
+        return
+
+    BPLog("Playing clip \"%s\" with path \"%s\" and bitrate %s." %(play_item.GetLabel(), play_item.GetPath(), item.GetProperty("bitrate")))
+    mc.GetPlayer().Play(play_item)
+
     track("Play", { "title": item.GetLabel(),
                     "url": item.GetPath(),
                     "Id": mc.GetUniqueId(),
