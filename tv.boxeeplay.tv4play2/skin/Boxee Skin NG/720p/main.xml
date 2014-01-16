@@ -35,7 +35,7 @@
             <posx>20</posx>
             <posy>110</posy>
             <control type="button" id="106">
-                <ondown>107</ondown>
+                <ondown>1000</ondown>
                 <onright lang="python">
                     <![CDATA[actions.move_right_from_menu()]]>
                 </onright>
@@ -55,6 +55,7 @@
                 <onclick lang="python"><![CDATA[actions.load_latest_full_episodes()]]></onclick>
             </control>
             <control type="button" id="107">
+                <visible>false</visible>
                 <onup>106</onup>
                 <onright lang="python">
                     <![CDATA[actions.move_right_from_menu()]]>
@@ -82,7 +83,7 @@
                 <width>190</width>
                 <height>430</height>
                 <orientation>vertical</orientation>
-                <onup>107</onup>
+                <onup>106</onup>
                 <onright lang="python">
                     <![CDATA[actions.move_right_from_menu()]]>
                 </onright>
