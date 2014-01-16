@@ -31,6 +31,7 @@ class ListItem:
         self.cast = []
         self.properties = {}
         self.description = ""
+        self.duration = 0
 
     def AddAlternativePathPath(self, label, path, media_type, thumbnail):
         self.alternative_paths.append({ "label" : label,

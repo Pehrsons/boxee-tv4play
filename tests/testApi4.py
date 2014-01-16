@@ -5,8 +5,9 @@
 import sys
 sys.path.append("../tv.boxeeplay.tv4play2/")
 from api4 import Api4Client as ApiClient
-from api4_mc import category_to_list_item, show_to_list_item, episode_to_list_item
+from api4_mc import category_to_list_item, show_to_list_item, episode_to_list_item, episode_list_item_to_playable
 from logger import Level, SetEnabledPlus
+from pirateplay import NoSuitableStreamError, NoStreamsError, pirateplayable_item
 import itertools
 import ip_info
 import unittest
@@ -46,15 +47,15 @@ class IntegrationTestApi4(unittest.TestCase):
     def test_fetch_episodes(self):
         categories = self.client.categories
         shows = []
-        shows.extend(self.client.get_shows(categories[2]))
+        shows.extend(self.client.get_shows(categories[3]))
         episodes = []
-        episodes.extend(self.client.get_episodes(shows[7]))
+        episodes.extend(itertools.islice(self.client.get_episodes(shows[7]), 1000))
         self.assertTrue(len(episodes) > 0)
 
     def test_convert_episodes(self):
         categories = self.client.categories
         shows = []
-        shows.extend(self.client.get_shows(categories[2]))
+        shows.extend(self.client.get_shows(categories[4]))
         episodes = []
         episodes.extend(itertools.islice(self.client.get_episodes(shows[7]), 150))
         mc_episodes = []
@@ -71,6 +72,16 @@ class IntegrationTestApi4(unittest.TestCase):
         for episode in mc_episodes:
             self.assertEpisode(episode)
             self.assertEquals(episode.GetProperty("episode"), "true")
+
+        try:
+            episode = episode_list_item_to_playable(episode)
+            self.assertString(pirateplayable_item(episode).GetPath())
+        except NoSuitableStreamError, e:
+            print str(e)
+            self.assertTrue(False)
+        except NoStreamsError, e:
+            print str(e)
+            self.assertTrue(False)
 
     def test_latest_episodes(self):
         episodes = []
