@@ -436,7 +436,7 @@ def show_error_and_exit(title = "Tyv채rr", message = "Ett ov채ntat fel har intr�
     mc.ShowDialogOk(title, message)
     mc.CloseWindow()
 
-def show_error_and_continue(title = "Tyv채rr", message = "Ett ov채ntat fel har intr채ffat. Appen st채ngs...", exception = None):
+def show_error_and_continue(title = "Tyv채rr", message = "Ett ov채ntat fel har intr채ffat.", exception = None):
     if exception is not None and IsEnabled(Level.DEBUG):
         raise
     BPLog("CONTINUE_ERROR_HANDLER. Title: %s, Message: %s" %(title, message), Level.ERROR)
