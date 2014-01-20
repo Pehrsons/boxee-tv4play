@@ -12,7 +12,7 @@ from trackerjob import TrackerJob
 from jobmanager import BoxeeJobManager
 from async_task import AsyncTask
 
-VERSION = "TV4Play 2.00"
+VERSION = "TV4Play 2.03"
 NO_SHOWS_TEXT = "Inga program laddade"
 NO_EPISODES_TEXT = "Inga avsnitt för det här programmet"
 
