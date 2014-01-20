@@ -143,9 +143,11 @@ def click_search():
     searched_shows = islice(searched_shows, 200)
     load_shows(searched_shows, searched_shows_item)
 
+    mc.ShowDialogWait()
     searched_episodes_thread.join()
     searched_episodes = searched_episodes_thread.get_result()
     add_episodes(searched_episodes, searched_episodes_item)
+    mc.HideDialogWait()
 
 def load_shows_from_category():
     global focused_group
@@ -162,11 +164,13 @@ def load_shows_from_category():
     shows = client.get_shows_from_id(category_id)
     load_shows(shows, cItem)
 
+    mc.ShowDialogWait()
     latest_episodes_thread.join()
     latest_episodes_item = mc.ListItem()
     latest_episodes_item.SetLabel("Senaste " + cItem.GetLabel())
     latest_for_category = latest_episodes_thread.get_result()
     add_episodes(latest_for_category, latest_episodes_item)
+    mc.HideDialogWait()
 
 def load_shows(shows, category_item):
     BPTraceEnter()
@@ -196,11 +200,13 @@ def load_recommended_episodes():
     load_episodes(iterate(client.get_recommended_episodes(), 40), recommended_item)
 
 def load_latest_full_episodes():
+    mc.ShowDialogWait()
     latest_item = mc.ListItem()
     latest_item.SetLabel("Senaste program")
     latest_item.SetProperty("category", "preset-category")
     set_shows([], mc.ListItem())
     load_episodes(iterate(client.get_latest_full_episodes(), 200), latest_item)
+    mc.HideDialogWait()
 
 def load_live():
     live_item = mc.ListItem()
