@@ -59,7 +59,7 @@ def initiate():
             BPLog("Could not set up API client: " + str(e))
             show_error_and_exit(message="Kunde inte kontakta API-servern. Appen stängs ner...")
 
-        latest_thread = AsyncTask(target=iterate, kwargs={"iterable":client.get_latest_full_episodes(), "limit":40})
+        latest_thread = AsyncTask(target=iterate, kwargs={"iterable":client.get_latest_full_episodes(), "limit":200})
         latest_thread.start()
 
         ip_getter.join(1.0)
@@ -200,7 +200,7 @@ def load_latest_full_episodes():
     latest_item.SetLabel("Senaste program")
     latest_item.SetProperty("category", "preset-category")
     set_shows([], mc.ListItem())
-    load_episodes(iterate(client.get_latest_full_episodes(), 40), latest_item)
+    load_episodes(iterate(client.get_latest_full_episodes(), 200), latest_item)
 
 def load_live():
     live_item = mc.ListItem()

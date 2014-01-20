@@ -58,7 +58,7 @@ class Api4Client:
         url.add_param("premium", "false")
         url.add_param("sorttype", "date")
         url.add_param("livepublished", "false")
-        url.add_param("rows", "100")
+        url.add_param("rows", "200")
         url.add_param("video_types", "programs")
         return self.get_iterable(url)
 
@@ -68,7 +68,7 @@ class Api4Client:
         url.add_param("premium", "false")
         url.add_param("sorttype", "date")
         url.add_param("livepublished", "false")
-        url.add_param("rows", "100")
+        url.add_param("rows", "200")
         return self.get_iterable(url)
 
     def get_episodes(self, show):
