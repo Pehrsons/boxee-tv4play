@@ -28,6 +28,7 @@ country_code = "unknown"
 is_sweden = True
 job_manager = BoxeeJobManager()
 ip_getter = ip_info.IpGetter()
+last_search_term = ""
 
 def initiate():
     global category_list_index
@@ -119,6 +120,32 @@ def loadCategories():
     target.SetItems(items)
     BPLog("Successfully loaded all categories.", Level.DEBUG)
     BPTraceExit()
+
+def click_search():
+    global last_search_term
+
+    search_term = mc.ShowDialogKeyboard("Ange sökterm", last_search_term, False)
+    if not search_term or search_term == "":
+        BPLog("Search cancelled")
+        return
+
+    last_search_term = search_term
+
+    searched_episodes_item = mc.ListItem()
+    searched_episodes_item.SetLabel("Avsnitt för \"%s\"" %search_term)
+    searched_episodes = client.get_episodes_from_search_term(search_term)
+    searched_episodes_thread = AsyncTask(target=iterate, kwargs={"iterable":searched_episodes, "limit": 50})
+    searched_episodes_thread.start()
+
+    searched_shows_item = mc.ListItem()
+    searched_shows_item.SetLabel("Program för \"%s\"" %search_term)
+    searched_shows = client.get_shows_from_search_term(search_term)
+    searched_shows = islice(searched_shows, 200)
+    load_shows(searched_shows, searched_shows_item)
+
+    searched_episodes_thread.join()
+    searched_episodes = searched_episodes_thread.get_result()
+    add_episodes(searched_episodes, searched_episodes_item)
 
 def load_shows_from_category():
     global focused_group

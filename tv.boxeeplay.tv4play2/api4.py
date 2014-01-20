@@ -37,10 +37,19 @@ class Api4Client:
     def get_shows(self, category):
         return self.get_shows_from_id(category["id"])
 
-    def get_shows_from_id(self, ident):
+    def get_shows_from_id(self, ident, hide_premium=False):
         url = self.get_list_endpoint("show")
         url.add_param("sorttype", "name")
         url.add_param("categoryid", ident)
+        if hide_premium:
+            url.add_param("premium_filter", "free")
+        return self.get_iterable(url)
+
+    def get_shows_from_search_term(self, term, hide_premium=False):
+        url = self.get_list_endpoint("show")
+        url.add_param("name", term)
+        if hide_premium:
+            url.add_param("premium_filter", "free")
         return self.get_iterable(url)
 
     def get_latest_full_episodes(self):
@@ -83,6 +92,13 @@ class Api4Client:
         url.add_param("livepublished", "false")
         url.add_param("categoryids", category_id)
         url.add_param("rows", "100")
+        return self.get_iterable(url)
+
+    def get_episodes_from_search_term(self, term):
+        url = self.get_list_endpoint("episode")
+        url.add_param("text", term)
+        url.add_param("premium", "false")
+        url.add_param("rows", "200")
         return self.get_iterable(url)
 
     def get_channels(self):

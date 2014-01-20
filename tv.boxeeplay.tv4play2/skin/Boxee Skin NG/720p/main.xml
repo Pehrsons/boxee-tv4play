@@ -35,7 +35,7 @@
             <posx>20</posx>
             <posy>110</posy>
             <control type="button" id="106">
-                <ondown>1000</ondown>
+                <ondown>107</ondown>
                 <onright lang="python">
                     <![CDATA[actions.move_right_from_menu()]]>
                 </onright>
@@ -55,7 +55,6 @@
                 <onclick lang="python"><![CDATA[actions.load_latest_full_episodes()]]></onclick>
             </control>
             <control type="button" id="107">
-                <visible>false</visible>
                 <onup>106</onup>
                 <onright lang="python">
                     <![CDATA[actions.move_right_from_menu()]]>
@@ -64,7 +63,7 @@
                 <posy>50</posy>
                 <width>190</width>
                 <height>40</height>
-                <label>Kanaler</label>
+                <label>Sök</label>
                 <font>font22</font>
                 <textcolor>ffbcbdc0</textcolor>
                 <focusedcolor>white</focusedcolor>
@@ -75,7 +74,7 @@
                 <texturefocus border="10">button.png</texturefocus>
                 <alttexturefocus border="10">button.png</alttexturefocus>
                 <alttexturenofocus border="10">button_alt.png</alttexturenofocus>
-                <onclick lang="python"><![CDATA[actions.load_live()]]></onclick>
+                <onclick lang="python"><![CDATA[actions.click_search()]]></onclick>
             </control>
             <control type="list" id="1000">
                 <description>Categories</description>
@@ -83,7 +82,7 @@
                 <width>190</width>
                 <height>430</height>
                 <orientation>vertical</orientation>
-                <onup>106</onup>
+                <onup>107</onup>
                 <onright lang="python">
                     <![CDATA[actions.move_right_from_menu()]]>
                 </onright>
