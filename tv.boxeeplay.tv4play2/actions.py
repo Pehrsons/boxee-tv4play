@@ -367,7 +367,7 @@ def play_item(item):
         item_type="Clip"
 
     try:
-        play_item = pirateplayable_item(play_item)
+        play_item = pirateplayable_item(play_item, settings.bitrate_limit())
     except NoStreamsError:
         track("Error",
                 { "title": item.GetLabel(),
