@@ -80,9 +80,10 @@
                 <description>Categories</description>
                 <posy>130</posy>
                 <width>190</width>
-                <height>430</height>
+                <height>390</height>
                 <orientation>vertical</orientation>
                 <onup>107</onup>
+                <ondown>108</ondown>
                 <onright lang="python">
                     <![CDATA[actions.move_right_from_menu()]]>
                 </onright>
@@ -143,6 +144,27 @@
                         </control>
                     </control>
                 </focusedlayout>
+            </control>
+            <control type="button" id="108">
+                <onup>1000</onup>
+                <onright lang="python">
+                    <![CDATA[actions.move_right_from_menu()]]>
+                </onright>
+                <posy>520</posy>
+                <width>110</width>
+                <height>30</height>
+                <label>Inställningar</label>
+                <font>font18</font>
+                <textcolor>ffbcbdc0</textcolor>
+                <focusedcolor>white</focusedcolor>
+                <selectedcolor>white</selectedcolor>
+                <aligny>center</aligny>
+                <textoffsetx>5</textoffsetx>
+                <texturenofocus border="10">button_bg.png</texturenofocus>
+                <texturefocus border="10">button.png</texturefocus>
+                <alttexturefocus border="10">button.png</alttexturefocus>
+                <alttexturenofocus border="10">button_alt.png</alttexturenofocus>
+                <onclick lang="python"><![CDATA[actions.click_settings()]]></onclick>
             </control>
         </control>
 

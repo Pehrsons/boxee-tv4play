@@ -2,7 +2,7 @@
 #author:Andreas Pehrson
 #project:boxeeplay.tv
 
-import mc, ip_info
+import mc, ip_info, settings
 from api4 import Api4Client as ApiClient
 from api4_mc import category_to_list_item, show_to_list_item, episode_to_list_item, set_outside_sweden, episode_list_item_to_playable
 from pirateplay import pirateplayable_item, NoStreamsError, NoSuitableStreamError
@@ -139,7 +139,7 @@ def click_search():
 
     searched_shows_item = mc.ListItem()
     searched_shows_item.SetLabel("Program för \"%s\"" %search_term)
-    searched_shows = client.get_shows_from_search_term(search_term)
+    searched_shows = client.get_shows_from_search_term(search_term, settings.show_premium())
     searched_shows = islice(searched_shows, 200)
     load_shows(searched_shows, searched_shows_item)
 
@@ -149,6 +149,8 @@ def click_search():
     add_episodes(searched_episodes, searched_episodes_item)
     mc.HideDialogWait()
 
+def click_settings():
+    settings.activate()
 def load_shows_from_category():
     global focused_group
 
@@ -161,7 +163,7 @@ def load_shows_from_category():
     latest_episodes_thread = AsyncTask(target=iterate, kwargs={"iterable":episodes, "limit":200})
     latest_episodes_thread.start()
 
-    shows = client.get_shows_from_id(category_id)
+    shows = client.get_shows_from_id(category_id, settings.show_premium())
     load_shows(shows, cItem)
 
     mc.ShowDialogWait()

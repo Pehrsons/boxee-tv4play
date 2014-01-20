@@ -34,21 +34,21 @@ class Api4Client:
     def get_iterable(self, endpoint):
         return Api4Iterable(self, endpoint)
 
-    def get_shows(self, category):
-        return self.get_shows_from_id(category["id"])
+    def get_shows(self, category, show_premium=True):
+        return self.get_shows_from_id(category["id"], show_premium)
 
-    def get_shows_from_id(self, ident, hide_premium=False):
+    def get_shows_from_id(self, ident, show_premium=True):
         url = self.get_list_endpoint("show")
         url.add_param("sorttype", "name")
         url.add_param("categoryid", ident)
-        if hide_premium:
+        if not show_premium:
             url.add_param("premium_filter", "free")
         return self.get_iterable(url)
 
-    def get_shows_from_search_term(self, term, hide_premium=False):
+    def get_shows_from_search_term(self, term, show_premium=True):
         url = self.get_list_endpoint("show")
         url.add_param("name", term)
-        if hide_premium:
+        if not show_premium:
             url.add_param("premium_filter", "free")
         return self.get_iterable(url)
 
