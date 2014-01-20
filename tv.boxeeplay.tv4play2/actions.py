@@ -156,7 +156,7 @@ def load_shows_from_category():
     category_id = cItem.GetProperty("id")
 
     episodes = client.get_episodes_from_category_id(category_id)
-    latest_episodes_thread = AsyncTask(target=iterate, kwargs={"iterable":episodes, "limit":40})
+    latest_episodes_thread = AsyncTask(target=iterate, kwargs={"iterable":episodes, "limit":200})
     latest_episodes_thread.start()
 
     shows = client.get_shows_from_id(category_id)

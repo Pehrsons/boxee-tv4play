@@ -91,7 +91,7 @@ class Api4Client:
         url.add_param("sorttype", "date")
         url.add_param("livepublished", "false")
         url.add_param("categoryids", category_id)
-        url.add_param("rows", "100")
+        url.add_param("rows", "200")
         return self.get_iterable(url)
 
     def get_episodes_from_search_term(self, term):
