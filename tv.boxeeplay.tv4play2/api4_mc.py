@@ -59,11 +59,13 @@ def episode_to_list_item(item, category="undefined", show="undefined"):
     list_item.SetLabel(item["name"])
     if item["lead"] is not None: list_item.SetDescription(item["lead"])
     list_item.SetProperty("date_available_until", repr(item["offdate"]))
-    list_item.SetProperty("date_broadcasted", repr(item["ontime"]))
     date_time = repr(item["ontime"])
+    list_item.SetProperty("date_broadcasted", date_time)
     year = date_time[0:4]
     month = date_time[4:6]
     day = date_time[6:8]
+    hour = date_time[8:10]
+    minute = date_time[10:12]
     list_item.SetDate(int(year),
                       int(month),
                       int(day))
@@ -74,20 +76,19 @@ def episode_to_list_item(item, category="undefined", show="undefined"):
     #duration = sum(map(parse_duration, zip(duration_array[1::2], duration_array[::2])))
     #list_item.SetDuration(duration)
     #info = "Längd: " + item["length"]
+    info = item["availability"]["human"]
+    info += {
+        True:  "\nTyp: Avsnitt",
+        False: "\nTyp: Klipp"
+    }[item["full_program"]]
 
-    # We have human readable availability info available, so use that instead.
-    #info += "\nPublicerat: %s/%s/%s" %(year,month,day)
+    info += "\nPublicerat: %s-%s-%s %s:%s" %(year,month,day,hour,minute)
     #info += "\nTillgänglig till och med " + item["date_available_until"].split("T")[0]
     #if outside_sweden:
     #    info += {
     #        "false": "\nKan ses i hela världen",
     #        "true":  "\nKan bara ses i Sverige"
     #    }[item["availability"]["geo_restricted"]]
-    info = item["availability"]["human"]
-    info += {
-        True:  "\nTyp: Avsnitt",
-        False: "\nTyp: Klipp"
-    }[item["full_program"]]
     list_item.SetStudio(info)
     list_item.SetThumbnail(get_image_size(item["metaimage"], "480x270"))
     list_item.SetIcon(get_image_size(item["metaimage"], "480x270")) # ListItem.Icon in UI shows the Thumbnail ...
